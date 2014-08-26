@@ -109,9 +109,10 @@ app.controller('cloud', function ($scope) {
 	
 	$scope.initialize = function()
 	{
-		$scope.query = gsQuery;
+		$scope.query = gsQuery.slice(0); // clone default query
 		$scope.words = [];
 		$scope.buildCloud();
+		$scope.filterContent();
 	}
 
 	$scope.more = function() {
@@ -120,10 +121,6 @@ app.controller('cloud', function ($scope) {
 	
 	$scope.less = function() {
 		console.log("TODO giThreshold/=2.0;processFeed(goFeedResult);");
-	}
-	
-	$scope.revert = function() {
-		console.log("TODO gsQuery=gsOriginalQuery;initialize();");
 	}
 	
 	$scope.buildCloud =  function() {
@@ -189,15 +186,17 @@ app.controller('cloud', function ($scope) {
 	}
 	
 	$scope.matches = [];
+	$scope.resultCount = 0;
 	
 	$scope.filterContent = function() {
-		var filteredContent = $scope.content;
+		var filteredContent = $scope.content.slice(0);
 		_.each($scope.query, function(term) {
 			filteredContent = _.filter(filteredContent, function(s) {
 				return s.match(new RegExp(term));
 			});
 		});
-		return filteredContent;
+		$scope.matches = filteredContent;
+		$scope.resultCount = _.size($scope.matches);
 	}
 
 	$scope.initialize(); // do this by default

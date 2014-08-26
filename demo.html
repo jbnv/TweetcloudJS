@@ -16,22 +16,22 @@ button.cloud {}
 </style>
 </head>
 
-<body data-ng-app="tweetcloud">
-<div class="tc" data-ng-controller="cloud">
-{{ contentCount() }} tweets | {{ transformCount() }} transformations
+<body data-ng-app="tweetcloud" data-ng-controller="cloud">
+<div class="tc">
+{{ resultCount }}/{{ contentCount() }} tweets | {{ transformCount() }} transformations
 <button class="control" id="more" data-ng-click="more()">More</button>
 <button class="control" id="less" data-ng-click="less()">Less</button>
-<button class="control" id="refresh" data-ng-click="initialize();">Refresh</button>
-<button class="control" id="revert" data-ng-click="revert()">Revert</button>
+<button class="control" id="refresh" data-ng-click="initialize();">Refresh</button> <!-- Currently doesn't work because content is constant -->
+<button class="control" id="revert" data-ng-click="initialize()">Revert</button>
 {{ queryToString() }}
 </div>
-<div class="tc" id="content" data-ng-controller="cloud">
+<div class="tc" id="content">
 	<button class="cloud" 
 		data-ng-repeat="wordspec in words" 
-		data-ng-click="addQueryTerm(wordspec.filter);buildCloud();"
+		data-ng-click="addQueryTerm(wordspec.filter);buildCloud();filterContent();"
 		data-ng-style="wordspec.style"
 		>{{ wordspec.word }}</button>
-	<ul><li data-ng-repeat="tweet in filterContent()">{{tweet}}</li></ul>
+	<ul><li data-ng-repeat="tweet in matches">{{tweet}}</li></ul>
 </div>
 </body>
 </html>
