@@ -23,7 +23,7 @@ button.cloud {}
 <button class="control" id="less" data-ng-click="less()">Less</button>
 <button class="control" id="refresh" data-ng-click="initialize();">Refresh</button>
 <button class="control" id="revert" data-ng-click="revert()">Revert</button>
-<span id="query"></span>
+{{ queryToString() }}
 </div>
 <div class="tc" id="content" data-ng-controller="cloud">
 	<button class="cloud" 

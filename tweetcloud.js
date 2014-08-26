@@ -147,16 +147,20 @@ app.controller('cloud', function ($scope) {
 
 	$scope.words = [];
 	
-	// Filters.
+	// Filter query.
 	
 	$scope.query = [];
 	
-	$scope.addQueryTerm = function(filter) {
-		$scope.query.push(filter);
+	$scope.addQueryTerm = function(term) {
+		$scope.query.push(term);
 	}
 	
 	$scope.resetQuery = function() {
 		$scope.query = [];
+	}
+	
+	$scope.queryToString = function() {
+		return $scope.query.join(' ');
 	}
 
 	// Interface functions.
@@ -190,14 +194,11 @@ app.controller('cloud', function ($scope) {
 			function(e) { return processText($scope.contentTextFunction(e)); }
 		);
 
-//console.log('$scope.query',$scope.query);
-		for (var term in $scope.query) {
-//console.log('applying term',term);
+		_.each($scope.query, function(term) {
 			filteredContent = _.filter(filteredContent, function(s) {
 				return s.match(new RegExp(term));
 			});
-		}
-//console.log('filter 2',filteredContent);
+		});
 		
 		// Reduce all content to a single string to process.
 		var oWords = _.reduce(
