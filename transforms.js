@@ -1,4 +1,4 @@
-var gaDefaultFilter = [
+var gaDefaultTransform = [
 ["\d\d?(hrs|mins)",""],
 ["able",""],
 ["abort(s|ed|ing|ion|ions)?","abortion|abort+OR+aborts+OR+aborted+OR+aborting+OR+abortion+OR+abortions"],

@@ -4,13 +4,28 @@ var gsQuery = []; //TODO Translate original query into an array
 var giThreshold = '{$threshold}'; if ((giThreshold == '') || (giThreshold[0] == '{')) giThreshold = 40;
 var giTweetCount = '{$tweetcount}'; if ((giTweetCount == '') || (giTweetCount[0] == '{')) giTweetCount = 40;
 var goFeedResult;
-var gsCustomFilters = "{$custom}"; if (gsCustomFilters[0] == '{') gsCustomFilters = '';
-
-var gaCustomFilters = _.map(eval(gsCustomFilters),  function (pFilter) { return pFilter.length == 3 ? [pFilter[1],pFilter[0]+'|'+pFilter[2]] : null; } );
-
-var gaFilter = _.map(gaDefaultFilter.concat(gaCustomFilters), function (pFilter) { return { exp : new RegExp('^('+pFilter[0]+')$'), rep : pFilter[1] }; } );
+var gsCustomTransform = "{$custom}"; if (gsCustomTransform[0] == '{') gsCustomTransform = '';
 
 // ----------------------------------------------------------------------------------------------------
+
+function processText(s) {
+	s = s.toLowerCase();
+	s = s.replace(/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/g,' '); // remove URLs
+	s = s.replace(/&amp;apos;/,'\'');
+	s = s.replace(/n\'t\b/g,' ');
+	s = s.replace(/\'s\b/g,' ');
+	s = s.replace(/s\'\b/g,' ');
+	s = s.replace(/[.,\/]/g,' '); // replace certain punctuation with spaces
+	s = s.replace(/\W\W+/g,' '); // coalesce white space and punctuation
+	//s = s.replace(/\b\w\w?\b/g,' '); // remove 1- and 2- letter words
+	return(s);
+}
+
+function processWord(pTransforms,pWord) {
+	if (pWord.length <= 2) return '';
+	_.each(pTransforms, function(tr) { pWord = pWord.replace(pFilter.exp,tr.rep); } );
+	return pWord;
+}
 
 function initializeFromTwitter()
 {/*
@@ -100,8 +115,24 @@ var app = angular.module('tweetcloud', []);
 
 app.controller('cloud', function ($scope) {
 
-    $scope.filterCount = function() {
-		return _.size(gaFilter);
+	// Transforms.
+
+	aCustomTransform = _.map(
+		eval(gsCustomTransform),  
+		function (pTransform) { 
+			return pTransform.length == 3 ? [pTransform[1],pTransform[0]+'|'+pTransform[2]] : null; 
+		} 
+	);
+
+	$scope.transforms = _.map(
+		gaDefaultTransform.concat(aCustomTransform), 
+		function (pTransform) {
+			return { exp : new RegExp('^('+pTransform[0]+')$'), rep : pTransform[1] }; 
+		} 
+	);
+
+    $scope.transformCount = function() {
+		return _.size($scope.transforms);
 	}
 
 	// Content.
@@ -183,7 +214,7 @@ app.controller('cloud', function ($scope) {
 		
 		var count = function (a,w) { 
 			if (w.length <= 2) return a;
-			w = _.reduce(gaFilter, function(memo,filter) { return memo.replace(filter.exp,filter.rep); }, w); 
+			w = _.reduce($scope.transforms, function(memo,filter) { return memo.replace(filter.exp,filter.rep); }, w); 
 			if (w!= '') { a[w] = (a[w] || 0) + 1; } 
 			return a;
 		};

@@ -4,9 +4,8 @@
 <!-- script src="//platform.twitter.com/widgets.js" charset="utf-8"></script-->
 <script src="angular.js" charset="utf-8"></script>
 <script src="underscore.js" charset="utf-8"></script>
-<script src="filters.js" charset="utf-8"></script>
+<script src="transforms.js" charset="utf-8"></script>
 <script src="formatDateFromTwitter.js" charset="utf-8"></script>
-<script src="process.js" charset="utf-8"></script>
 <script src="loremipsum.js" charset="utf-8"></script>
 <script src="tweetcloud.js" charset="utf-8"></script>
 
@@ -19,7 +18,7 @@ button.cloud {}
 
 <body data-ng-app="tweetcloud">
 <div class="tc" data-ng-controller="cloud">
-<span>{{ contentCount() }}</span> tweets | <span>{{ filterCount() }}</span> filters
+{{ contentCount() }} tweets | {{ transformCount() }} transformations
 <button class="control" id="more" data-ng-click="more()">More</button>
 <button class="control" id="less" data-ng-click="less()">Less</button>
 <button class="control" id="refresh" data-ng-click="initialize();">Refresh</button>
