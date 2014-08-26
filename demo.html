@@ -1,13 +1,14 @@
 <html>
 <head>
 <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAZZxUJfOIowhikYYS-eJkqBQiRW4WmGTb-SWK1gAwisdSMaJWPBQV3W7DyTe5nUAYG9z0uYEmdlSLTw"></script>
-<script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-<script src="angular.min.js" charset="utf-8"></script>
+<!-- script src="//platform.twitter.com/widgets.js" charset="utf-8"></script-->
+<script src="jquery.js" charset="utf-8"></script>
 <script src="jqueryui.js" charset="utf-8"></script>
 <script src="underscore.js" charset="utf-8"></script>
 <script src="filters.js" charset="utf-8"></script>
 <script src="formatDateFromTwitter.js" charset="utf-8"></script>
 <script src="process.js" charset="utf-8"></script>
+<script src="loremipsum.js" charset="utf-8"></script>
 <script src="tweetcloud.js" charset="utf-8"></script>
 
 <style>
@@ -17,7 +18,7 @@ button.cloud {}
 </style>
 </head>
 
-<body>
+<body data-ng-app>
 <div class="tc">
 <span id="count">0</span> tweets | <span id="filterCount">0</span> filters
 <button class="control" id="more" onClick="giThreshold*=2;processFeed(goFeedResult);">More</button>
@@ -26,6 +27,7 @@ button.cloud {}
 <button class="control" id="revert" onClick="gsQuery=gsOriginalQuery;initialize();">Revert</button>
 <span id="query"></span>
 </div>
-<div class="tc" id="content"></div>
+<div class="tc" id="content">
+</div>
 </body>
 </html>
