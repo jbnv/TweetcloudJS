@@ -2,8 +2,7 @@
 <head>
 <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAZZxUJfOIowhikYYS-eJkqBQiRW4WmGTb-SWK1gAwisdSMaJWPBQV3W7DyTe5nUAYG9z0uYEmdlSLTw"></script>
 <!-- script src="//platform.twitter.com/widgets.js" charset="utf-8"></script-->
-<script src="jquery.js" charset="utf-8"></script>
-<script src="jqueryui.js" charset="utf-8"></script>
+<script src="angular.js" charset="utf-8"></script>
 <script src="underscore.js" charset="utf-8"></script>
 <script src="filters.js" charset="utf-8"></script>
 <script src="formatDateFromTwitter.js" charset="utf-8"></script>
@@ -18,16 +17,21 @@ button.cloud {}
 </style>
 </head>
 
-<body data-ng-app>
-<div class="tc">
-<span id="count">0</span> tweets | <span id="filterCount">0</span> filters
-<button class="control" id="more" onClick="giThreshold*=2;processFeed(goFeedResult);">More</button>
-<button class="control" id="less" onClick="giThreshold/=2.0;processFeed(goFeedResult);">Less</button>
-<button class="control" id="refresh" onClick="initialize();">Refresh</button>
-<button class="control" id="revert" onClick="gsQuery=gsOriginalQuery;initialize();">Revert</button>
+<body data-ng-app="tweetcloud">
+<div class="tc" data-ng-controller="cloud">
+<span>{{ contentCount() }}</span> tweets | <span>{{ filterCount() }}</span> filters
+<button class="control" id="more" data-ng-click="more()">More</button>
+<button class="control" id="less" data-ng-click="less()">Less</button>
+<button class="control" id="refresh" data-ng-click="initialize();">Refresh</button>
+<button class="control" id="revert" data-ng-click="revert()">Revert</button>
 <span id="query"></span>
 </div>
-<div class="tc" id="content">
+<div class="tc" id="content" data-ng-controller="cloud">
+	<button class="cloud" 
+		data-ng-repeat="wordspec in words" 
+		data-ng-click="addFilter(wordspec.filter);buildCloud();"
+		data-ng-style="wordspec.style"
+		>{{ wordspec.word }}</button>
 </div>
 </body>
 </html>
