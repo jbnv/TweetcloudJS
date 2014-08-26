@@ -49,65 +49,6 @@ function initializeFromTwitter()
     feed.load(processFeed);
 */}
 
-
-// Put the tweets in the global array.
-function processFeed(oFeedResult)
-{
-    goFeedResult = oFeedResult;
-
-    // Clear content.
-    $("#content > *").remove();
-    $("#content").html("");
-
-    if (goFeedResult.error)
-     $("#content").html("Unable to build feed: "+goFeedResult.error.message);
-    else
-     if (goFeedResult.feed.entries.length > giTweetCount) buildCloud(); else buildTable();
-
-    $("#count").html(goFeedResult.feed.entries.length);
-}
-
-// content: array of stuff to display.
-// selector: function that transforms stuff entry into parsable string.
-// Twitter parameters: (goFeedResult.feed.entries, function(entry) { return entry.title; })
-// Lorem ipsum parameters: (loremipsum, function(entry) { return entry; } )
-// Returns: [ { word: 'word', count: count } ]
-function buildCloudArray(content,selector)
-{
-
-} // buildCloudArray
-	
-
-function buildTable()
-{/*
-  $("#more").hide();
-  $("#less").hide();
-
-  _.each(goFeedResult.feed.entries, function(oEntry)
-  {
-     var eBlock = document.createElement("blockquote");
-     eBlock.setAttribute('class', 'twitter-tweet');
-
-     var eP = document.createElement("p");
-     eP.innerHTML = oEntry.content;  //.replace(/\<\/?b\>/g,''); // remove boldface
-     eBlock.appendChild(eP);
-
-     eBlock.appendChild(document.createTextNode("\u2014 "+oEntry.author.replace(/^(\w+) \((.+)\)$/g,"$2 (\@$1)")+" "));
-
-     var eTimeCellContent = document.createElement('a');
-     eTimeCellContent.href = oEntry.link;
-     eTimeCellContent.setAttribute('data-datetime', oEntry.publishedDate);
-     eTimeCellContent.appendChild(document.createTextNode(formatDateFromTwitter(oEntry.publishedDate)));
-     eTimeCellContent.style.textDecoration = "none";
-     eBlock.appendChild(eTimeCellContent);
-
-     //$("#content").append(eBlock);
-     document.getElementById("content").appendChild(eBlock);
-  });
-
-  twttr.widgets.load();
-*/}
-
 // ----------------------------------------------------------------------------------------------------
 // Angular implementation.
 
@@ -137,7 +78,8 @@ app.controller('cloud', function ($scope) {
 
 	// Content.
 
-	$scope.content = loremipsum; // TODO Change this to [] when content added dynamically.
+	// TODO when content added dynamically: $scope.content = [];	
+	$scope.content = loremipsum;
 	$scope.contentTextFunction = function(entity) {
 		return entity; // For now, content is an array of strings.
 	};
@@ -244,6 +186,18 @@ app.controller('cloud', function ($scope) {
 				});
 			}
 		} // for each sum
+	}
+	
+	$scope.matches = [];
+	
+	$scope.filterContent = function() {
+		var filteredContent = $scope.content;
+		_.each($scope.query, function(term) {
+			filteredContent = _.filter(filteredContent, function(s) {
+				return s.match(new RegExp(term));
+			});
+		});
+		return filteredContent;
 	}
 
 	$scope.initialize(); // do this by default

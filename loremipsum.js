@@ -19,7 +19,6 @@ var loremipsum = [
 "Mauris posuere tellus quis quam eleifend convallis.",
 "Nulla tempor turpis vel orci euismod tristique.",
 "Ut at arcu bibendum, pretium mi eu, mattis magna.",
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 "Nullam finibus est id nisl commodo convallis.",
 "Aliquam eget neque in ipsum mollis euismod.",
 "Duis ac eros ut magna venenatis semper.",

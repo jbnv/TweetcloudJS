@@ -31,6 +31,7 @@ button.cloud {}
 		data-ng-click="addQueryTerm(wordspec.filter);buildCloud();"
 		data-ng-style="wordspec.style"
 		>{{ wordspec.word }}</button>
+	<ul><li data-ng-repeat="tweet in filterContent()">{{tweet}}</li></ul>
 </div>
 </body>
 </html>
