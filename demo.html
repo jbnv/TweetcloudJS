@@ -29,7 +29,7 @@ button.cloud {}
 <div class="tc" id="content" data-ng-controller="cloud">
 	<button class="cloud" 
 		data-ng-repeat="wordspec in words" 
-		data-ng-click="addFilter(wordspec.filter);buildCloud();"
+		data-ng-click="addQueryTerm(wordspec.filter);buildCloud();"
 		data-ng-style="wordspec.style"
 		>{{ wordspec.word }}</button>
 </div>

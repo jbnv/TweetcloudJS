@@ -1,6 +1,6 @@
 // Page parameters
 var gsOriginalQuery = '{$q}'.replace(/\s+/g,'+').replace(/"/g,"%23");
-var gsQuery = '';
+var gsQuery = []; //TODO Translate original query into an array
 var giThreshold = '{$threshold}'; if ((giThreshold == '') || (giThreshold[0] == '{')) giThreshold = 40;
 var giTweetCount = '{$tweetcount}'; if ((giTweetCount == '') || (giTweetCount[0] == '{')) giTweetCount = 40;
 var goFeedResult;
@@ -118,10 +118,14 @@ app.controller('cloud', function ($scope) {
 	
 	// Filters.
 	
-	$scope.filters = [];
+	$scope.query = [];
 	
-	$scope.addFilter = function(filter) {
-		$scope.filter.push(filter);
+	$scope.addQueryTerm = function(filter) {
+		$scope.query.push(filter);
+	}
+	
+	$scope.resetQuery = function() {
+		$scope.query = [];
 	}
 
 	// Interface functions.
@@ -146,15 +150,29 @@ app.controller('cloud', function ($scope) {
 	}
 	
 	$scope.buildCloud =  function() {
-console.log('buildCloud()');
+
 		$scope.words = [];
 
+		// Filter content according to the query.
+		var filteredContent = _.map(
+			$scope.content,
+			function(e) { return processText($scope.contentTextFunction(e)); }
+		);
+
+//console.log('$scope.query',$scope.query);
+		for (var term in $scope.query) {
+//console.log('applying term',term);
+			filteredContent = _.filter(filteredContent, function(s) {
+				return s.match(new RegExp(term));
+			});
+		}
+//console.log('filter 2',filteredContent);
+		
 		// Reduce all content to a single string to process.
 		var oWords = _.reduce(
-			$scope.content, 
+			filteredContent, 
 			function(a,entry) { 
-				entrystuff = processText($scope.contentTextFunction(entry));
-				entryarray = entrystuff.split(' ');
+				entryarray = entry.split(' ');
 				a.push.apply(a,entryarray);
 				return a;
 			},
@@ -188,8 +206,8 @@ console.log('buildCloud()');
 				var scale = 100+4*iFreq;
 
 				$scope.words.push({
-					'word' : word,
-					'filter' : (gsQuery.match(/[/]/) ? "" : gsQuery+"+") + eWordQuery.replace('\'','\\\''),
+					'word' : word+'('+scale+')',
+					'filter' : word, //TODO Apply substitute filter.
 					'style' : "{ font-size: "+scale+"%; }"
 				});
 			}
