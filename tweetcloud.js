@@ -1,7 +1,7 @@
 // Page parameters
 var gsOriginalQuery = '{$q}'.replace(/\s+/g,'+').replace(/"/g,"%23");
 var gsQuery = []; //TODO Translate original query into an array
-var giThreshold = '{$threshold}'; if ((giThreshold == '') || (giThreshold[0] == '{')) giThreshold = 40;
+var giThreshold = '{$threshold}'; if ((giThreshold == '') || (giThreshold[0] == '{')) giThreshold = 5;
 var giTweetCount = '{$tweetcount}'; if ((giTweetCount == '') || (giTweetCount[0] == '{')) giTweetCount = 40;
 var goFeedResult;
 var gsCustomTransform = "{$custom}"; if (gsCustomTransform[0] == '{') gsCustomTransform = '';
@@ -55,6 +55,8 @@ function initializeFromTwitter()
 var app = angular.module('tweetcloud', []);
 
 app.controller('cloud', function ($scope) {
+
+	$scope.threshold = giThreshold;
 
 	// Transforms.
 
@@ -116,11 +118,13 @@ app.controller('cloud', function ($scope) {
 	}
 
 	$scope.more = function() {
-		console.log("TODO giThreshold*=2;processFeed(goFeedResult);");
+		$scope.threshold *= 1.5;
+		$scope.buildCloud();
 	}
 	
 	$scope.less = function() {
-		console.log("TODO giThreshold/=2.0;processFeed(goFeedResult);");
+		$scope.threshold /= 1.5;
+		$scope.buildCloud();
 	}
 	
 	$scope.buildCloud =  function() {
@@ -161,15 +165,19 @@ app.controller('cloud', function ($scope) {
 
 		// Generate word counts.
 		var oSums = _.reduce(oWords,count,[]);
-		
-		var iGrandTotal = _.reduce(oSums, function(sum,o){ return sum+o; }, 0);
-		var iMaxFreq = _.max(oSums, function(o){return o;})
+		iGrandTotal = 0;
+		iMaxFreq = -Infinity;
+		for (word in oSums) {
+			count = oSums[word];		
+			iGrandTotal += count;
+			if (iMaxFreq < count) { iMaxFreq = count; }
+		}
 
 		// Build the cloud.
 		// Size the words based on the frequency distribution.
 		for (oSum in oSums) {
 			var iFreq = oSums[oSum];
-			if ((iFreq*giThreshold) > (iMaxFreq || 0)) {
+			if ((iFreq*$scope.threshold) > (iMaxFreq || 0)) {
 				var wordArray = oSum.split('|')
 				var word = wordArray[0];
 				var eWordQuery = (wordArray.length == 2) ? wordArray[1] : word;
