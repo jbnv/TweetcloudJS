@@ -182,12 +182,12 @@ app.controller('cloud', function ($scope) {
 				var word = wordArray[0];
 				var eWordQuery = (wordArray.length == 2) ? wordArray[1] : word;
 
-				var scale = 100+4*iFreq;
+				var scale = 40+4*iFreq;
 
 				$scope.words.push({
-					'word' : word+'('+scale+')',
+					'word' : word,
 					'filter' : word, //TODO Apply substitute filter.
-					'style' : "{ font-size: "+scale+"%; }"
+					'style' : { "font-size": ""+scale+"%" }
 				});
 			}
 		} // for each sum
