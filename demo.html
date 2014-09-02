@@ -8,20 +8,37 @@
 <script src="tweetcloud.js" charset="utf-8"></script>
 
 <style>
-div.tc { border: 1px solid black; padding: 3px; font: 12pt Calibri, Verdana, Arial, Helvetica, sans-serif; }
-button.control {}
+div.toolbar .tool { 
+	display:inline; 
+	background-color:#eee; 
+	border:1px solid; 
+	border-color:#f3f3f3 #bbb #bbb #f3f3f3; 
+	margin:0; 
+	padding:.5em; 
+	zoom: 1;  
+	font: 12pt Calibri, Verdana, Arial, Helvetica, sans-serif;
+}
+div.tc { padding: .5em; font: 12pt Calibri, Verdana, Arial, Helvetica, sans-serif; }
+button.control { vertical-align: middle; }
 button.cloud {}
 </style>
 </head>
 
 <body data-ng-app="tweetcloud" data-ng-controller="cloud">
-<div class="tc">
-{{ resultCount }}/{{ contentCount() }} tweets | {{ transformCount() }} transformations
-<button class="control" id="more" data-ng-click="more()">More</button>
-<button class="control" id="less" data-ng-click="less()">Less</button>
-<button class="control" id="refresh" data-ng-click="initialize();">Refresh</button> <!-- Currently doesn't work because content is constant -->
-<button class="control" id="revert" data-ng-click="initialize()">Revert</button>
-{{ queryToString() }}
+<div class="toolbar">
+	<div class="tool">{{ resultCount }}/{{ contentCount() }} tweets</div> 
+	<div class="tool">{{ transformCount() }} transformations</div>
+	<div class="tool">Buttons
+		<button class="control" id="more" data-ng-click="more()">More</button>
+		<button class="control" id="less" data-ng-click="less()">Less</button>
+		<button class="control" id="bigger" data-ng-click="bigger()">Bigger</button>
+		<button class="control" id="smaller" data-ng-click="smaller()">Smaller</button>
+	</div>
+	<div class="tool">Content
+		<button class="control" id="refresh" data-ng-click="initialize();">Refresh</button> <!-- Currently doesn't work because content is constant -->
+		<button class="control" id="revert" data-ng-click="initialize()">Revert</button>
+	</div>
+	<div class="tool">{{ queryToString() }}</div>
 </div>
 <div class="tc" id="content">
 	<button class="cloud" 

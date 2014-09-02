@@ -57,6 +57,7 @@ var app = angular.module('tweetcloud', []);
 app.controller('cloud', function ($scope) {
 
 	$scope.threshold = giThreshold;
+	$scope.basescale = 40;
 
 	// Transforms.
 
@@ -131,6 +132,16 @@ app.controller('cloud', function ($scope) {
 		$scope.buildCloud();
 	}
 	
+	$scope.bigger = function() {
+		$scope.basescale += 20;
+		$scope.buildCloud();
+	}
+	
+	$scope.smaller = function() {
+		$scope.basescale -= 20;
+		$scope.buildCloud();
+	}
+	
 	$scope.buildCloud =  function() {
 
 		$scope.words = [];
@@ -186,7 +197,7 @@ app.controller('cloud', function ($scope) {
 				var word = wordArray[0];
 				var filter = (wordArray.length == 2) ? wordArray[1] : word;
 
-				var scale = 40+4*iFreq;
+				var scale = $scope.basescale + 4*iFreq;
 
 				$scope.words.push({
 					'word' : word,
