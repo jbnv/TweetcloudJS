@@ -70,7 +70,11 @@ app.controller('cloud', function ($scope) {
 	$scope.transforms = _.map(
 		gaDefaultTransform.concat(aCustomTransform), 
 		function (pTransform) {
-			return { exp : new RegExp('^('+pTransform[0]+')$'), rep : pTransform[1] }; 
+			return { 
+				exp : new RegExp('^('+pTransform[0]+')$'), 
+				rep : pTransform[1] ? pTransform[1] : '',
+				filter : pTransform[2] ? pTransform[2] : pTransform[0]
+			}; 
 		} 
 	);
 
@@ -180,13 +184,13 @@ app.controller('cloud', function ($scope) {
 			if ((iFreq*$scope.threshold) > (iMaxFreq || 0)) {
 				var wordArray = oSum.split('|')
 				var word = wordArray[0];
-				var eWordQuery = (wordArray.length == 2) ? wordArray[1] : word;
+				var filter = (wordArray.length == 2) ? wordArray[1] : word;
 
 				var scale = 40+4*iFreq;
 
 				$scope.words.push({
 					'word' : word,
-					'filter' : word, //TODO Apply substitute filter.
+					'filter' : filter,
 					'style' : { "font-size": ""+scale+"%" }
 				});
 			}
@@ -200,7 +204,7 @@ app.controller('cloud', function ($scope) {
 		var filteredContent = $scope.content.slice(0);
 		_.each($scope.query, function(term) {
 			filteredContent = _.filter(filteredContent, function(s) {
-				return s.match(new RegExp(term));
+				return s.match(new RegExp(term,'gi'));
 			});
 		});
 		$scope.matches = filteredContent;
