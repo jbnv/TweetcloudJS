@@ -6,7 +6,9 @@
 <script src="formatDateFromTwitter.js" charset="utf-8"></script>
 <script src="loremipsum.js" charset="utf-8"></script>
 <script src="tweetcloud.js" charset="utf-8"></script>
+<script src="ui-bootstrap-tpls-0.11.0.js" charset="utf-8"></script>
 
+<link rel="stylesheet" type="text/css" href="bootstrap.css"></link>
 <style>
 div.toolbar .tool { 
 	display:inline; 
@@ -29,10 +31,12 @@ button.cloud {}
 	<div class="tool">{{ resultCount }}/{{ contentCount() }} tweets</div> 
 	<div class="tool">{{ transformCount() }} transformations</div>
 	<div class="tool">Buttons
-		<button class="control" id="more" data-ng-click="more()">More</button>
-		<button class="control" id="less" data-ng-click="less()">Less</button>
-		<button class="control" id="bigger" data-ng-click="bigger()">Bigger</button>
-		<button class="control" id="smaller" data-ng-click="smaller()">Smaller</button>
+		<div class="btn-group">
+			<label class="btn btn-primary" id="more" data-ng-click="more()">More</label>
+			<label class="btn btn-primary" id="less" data-ng-click="less()">Less</label>
+			<label class="btn btn-primary" id="bigger" data-ng-click="bigger()">Bigger</label>
+			<label class="btn btn-primary" id="smaller" data-ng-click="smaller()">Smaller</label>
+		</div>
 	</div>
 	<div class="tool">Content
 		<button class="control" id="refresh" data-ng-click="initialize();">Refresh</button> <!-- Currently doesn't work because content is constant -->

@@ -52,7 +52,7 @@ function initializeFromTwitter()
 // ----------------------------------------------------------------------------------------------------
 // Angular implementation.
 
-var app = angular.module('tweetcloud', []);
+var app = angular.module('tweetcloud', ['ui.bootstrap']);
 
 app.controller('cloud', function ($scope) {
 
