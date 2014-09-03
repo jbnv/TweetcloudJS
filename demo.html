@@ -47,7 +47,7 @@ button.cloud {}
 					<label class="btn btn-default" id="revert" data-ng-click="initialize()">Revert</label>
 				</div></a>
 			</li>
-			<li><a>{{ queryToString() }}</a></li>
+			<li><a><span class="label label-primary" ng-repeat="queryterm in query">{{queryterm}}<span></a></li>
 		</ul>
 	</div>
 </nav>
