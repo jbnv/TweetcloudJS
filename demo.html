@@ -32,6 +32,9 @@ button.cloud {}
 		<ul class="nav navbar-nav">
 			<li><a>{{ resultCount }}/{{ contentCount() }} tweets</a></li> 
 			<li><a>{{ transformCount() }} transformations</a></li>
+			<li><a><span class="label label-primary" ng-repeat="queryterm in query">{{queryterm}}<span></a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
 			<li><a>Buttons
 				<div class="btn-group">
 					<label class="btn btn-default" id="more" data-ng-click="more()">More</label>
@@ -47,7 +50,6 @@ button.cloud {}
 					<label class="btn btn-default" id="revert" data-ng-click="initialize()">Revert</label>
 				</div></a>
 			</li>
-			<li><a><span class="label label-primary" ng-repeat="queryterm in query">{{queryterm}}<span></a></li>
 		</ul>
 	</div>
 </nav>
