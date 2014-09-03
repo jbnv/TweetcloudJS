@@ -21,32 +21,36 @@ div.toolbar .tool {
 	font: 12pt Calibri, Verdana, Arial, Helvetica, sans-serif;
 }
 div.tc { padding: .5em; font: 12pt Calibri, Verdana, Arial, Helvetica, sans-serif; }
-button.control { vertical-align: middle; }
 button.cloud {}
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 </style>
 </head>
 
 <body data-ng-app="tweetcloud" data-ng-controller="cloud">
-<div class="toolbar">
-	<div class="tool">{{ resultCount }}/{{ contentCount() }} tweets</div> 
-	<div class="tool">{{ transformCount() }} transformations</div>
-	<div class="tool">Buttons
-		<div class="btn-group">
-			<label class="btn btn-default" id="more" data-ng-click="more()">More</label>
-			<label class="btn btn-default" id="less" data-ng-click="less()">Less</label>
-			<label class="btn btn-default" id="bigger" data-ng-click="bigger()">Bigger</label>
-			<label class="btn btn-default" id="smaller" data-ng-click="smaller()">Smaller</label>
-		</div>
+<nav role="navigation" class="navbar navbar-default">
+	<div class="navbar-header">
+		<ul class="nav navbar-nav">
+			<li><a>{{ resultCount }}/{{ contentCount() }} tweets</a></li> 
+			<li><a>{{ transformCount() }} transformations</a></li>
+			<li><a>Buttons
+				<div class="btn-group">
+					<label class="btn btn-default" id="more" data-ng-click="more()">More</label>
+					<label class="btn btn-default" id="less" data-ng-click="less()">Less</label>
+					<label class="btn btn-default" id="bigger" data-ng-click="bigger()">Bigger</label>
+					<label class="btn btn-default" id="smaller" data-ng-click="smaller()">Smaller</label>
+				</div></a>
+			</li>
+			<li><a>Content
+				<div class="btn-group">
+					<label class="btn btn-default" data-ng-click="showTweets = !showTweets">Toggle</label>
+					<label class="btn btn-default" id="refresh" data-ng-click="initialize();">Refresh</label> <!-- Currently doesn't work because content is constant -->
+					<label class="btn btn-default" id="revert" data-ng-click="initialize()">Revert</label>
+				</div></a>
+			</li>
+			<li><a>{{ queryToString() }}</a></li>
+		</ul>
 	</div>
-	<div class="tool">Content
-		<div class="btn-group">
-			<label class="btn btn-default" data-ng-click="showTweets = !showTweets">Toggle</label>
-			<label class="btn btn-default" id="refresh" data-ng-click="initialize();">Refresh</label> <!-- Currently doesn't work because content is constant -->
-			<label class="btn btn-default" id="revert" data-ng-click="initialize()">Revert</label>
-		</div>
-	</div>
-	<div class="tool">{{ queryToString() }}</div>
-</div>
+</nav>
 <div class="tc" id="content">
 	<button class="cloud btn btn-default btn-xs" 
 		data-ng-repeat="wordspec in words" 
