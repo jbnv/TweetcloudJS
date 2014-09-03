@@ -34,10 +34,3 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
-
-# Library files
-angular.js
-angular.min.js
-jquery.js
-jqueryui.js
-underscore.js
