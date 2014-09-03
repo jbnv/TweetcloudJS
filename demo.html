@@ -32,20 +32,22 @@ button.cloud {}
 	<div class="tool">{{ transformCount() }} transformations</div>
 	<div class="tool">Buttons
 		<div class="btn-group">
-			<label class="btn btn-primary" id="more" data-ng-click="more()">More</label>
-			<label class="btn btn-primary" id="less" data-ng-click="less()">Less</label>
-			<label class="btn btn-primary" id="bigger" data-ng-click="bigger()">Bigger</label>
-			<label class="btn btn-primary" id="smaller" data-ng-click="smaller()">Smaller</label>
+			<label class="btn btn-default" id="more" data-ng-click="more()">More</label>
+			<label class="btn btn-default" id="less" data-ng-click="less()">Less</label>
+			<label class="btn btn-default" id="bigger" data-ng-click="bigger()">Bigger</label>
+			<label class="btn btn-default" id="smaller" data-ng-click="smaller()">Smaller</label>
 		</div>
 	</div>
 	<div class="tool">Content
-		<button class="control" id="refresh" data-ng-click="initialize();">Refresh</button> <!-- Currently doesn't work because content is constant -->
-		<button class="control" id="revert" data-ng-click="initialize()">Revert</button>
+		<div class="btn-group">
+			<label class="btn btn-default" id="refresh" data-ng-click="initialize();">Refresh</label> <!-- Currently doesn't work because content is constant -->
+			<label class="btn btn-default" id="revert" data-ng-click="initialize()">Revert</label>
+		</div>
 	</div>
 	<div class="tool">{{ queryToString() }}</div>
 </div>
 <div class="tc" id="content">
-	<button class="cloud" 
+	<button class="cloud btn btn-default btn-xs" 
 		data-ng-repeat="wordspec in words" 
 		data-ng-click="addQueryTerm(wordspec.filter);buildCloud();filterContent();"
 		data-ng-style="wordspec.style"
