@@ -40,6 +40,7 @@ button.cloud {}
 	</div>
 	<div class="tool">Content
 		<div class="btn-group">
+			<label class="btn btn-default" data-ng-click="showTweets = !showTweets">Toggle</label>
 			<label class="btn btn-default" id="refresh" data-ng-click="initialize();">Refresh</label> <!-- Currently doesn't work because content is constant -->
 			<label class="btn btn-default" id="revert" data-ng-click="initialize()">Revert</label>
 		</div>
@@ -52,7 +53,7 @@ button.cloud {}
 		data-ng-click="addQueryTerm(wordspec.filter);buildCloud();filterContent();"
 		data-ng-style="wordspec.style"
 		>{{ wordspec.word }}</button>
-	<ul><li data-ng-repeat="tweet in matches">{{tweet}}</li></ul>
+	<ul collapse="!showTweets"><li data-ng-repeat="tweet in matches">{{tweet}}</li></ul>
 </div>
 </body>
 </html>

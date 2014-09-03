@@ -58,7 +58,9 @@ app.controller('cloud', function ($scope) {
 
 	$scope.threshold = giThreshold;
 	$scope.basescale = 40;
-
+	$scope.tweetthreshold = 10;
+	
+	$scope.showTweets = false;
 	// Transforms.
 
 	aCustomTransform = _.map(
@@ -220,6 +222,8 @@ app.controller('cloud', function ($scope) {
 		});
 		$scope.matches = filteredContent;
 		$scope.resultCount = _.size($scope.matches);
+		
+		$scope.showTweets = ($scope.resultCount <= $scope.tweetthreshold);
 	}
 
 	$scope.initialize(); // do this by default
