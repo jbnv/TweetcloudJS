@@ -8,19 +8,14 @@
 <script src="tweetcloud.js" charset="utf-8"></script>
 <script src="ui-bootstrap-tpls-0.11.0.js" charset="utf-8"></script>
 
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".hastooltip").tooltip();   
+});
+</script>
+
 <link rel="stylesheet" type="text/css" href="bootstrap.css"></link>
 <style>
-div.toolbar .tool { 
-	display:inline; 
-	background-color:#eee; 
-	border:1px solid; 
-	border-color:#f3f3f3 #bbb #bbb #f3f3f3; 
-	margin:0; 
-	padding:.5em; 
-	zoom: 1;  
-	font: 12pt Calibri, Verdana, Arial, Helvetica, sans-serif;
-}
-div.tc { padding: .5em; font: 12pt Calibri, Verdana, Arial, Helvetica, sans-serif; }
 button.cloud {}
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 </style>
@@ -37,17 +32,38 @@ button.cloud {}
 		<ul class="nav navbar-nav navbar-right">
 			<li><a>Buttons
 				<div class="btn-group">
-					<label class="btn btn-default" id="more" data-ng-click="more()">More</label>
-					<label class="btn btn-default" id="less" data-ng-click="less()">Less</label>
-					<label class="btn btn-default" id="bigger" data-ng-click="bigger()">Bigger</label>
-					<label class="btn btn-default" id="smaller" data-ng-click="smaller()">Smaller</label>
+					<label class="btn btn-lg btn-default" data-ng-click="less()"
+							tooltip-placement="bottom" tooltip="Show fewer cloud buttons.">
+						<img src="glyphicons/png/glyphicons_433_minus.png" />
+					</label>
+					<label class="btn btn-lg btn-default" data-ng-click="more()"
+							tooltip-placement="bottom" tooltip="Show more cloud buttons.">
+						<img src="glyphicons/png/glyphicons_432_plus.png" />
+					</label>
+					<label class="btn btn-lg btn-default" data-ng-click="smaller()"
+							tooltip-placement="bottom" tooltip="Make cloud buttons smaller.">
+						<img src="glyphicons/png/glyphicons_115_text_smaller.png" />
+					</label>
+					<label class="btn btn-lg btn-default" data-ng-click="bigger()"
+							tooltip-placement="bottom" tooltip="Make cloud buttons bigger.">
+						<img src="glyphicons/png/glyphicons_116_text_bigger.png" />
+					</label>
 				</div></a>
 			</li>
 			<li><a>Content
 				<div class="btn-group">
-					<label class="btn btn-default" data-ng-click="showTweets = !showTweets">Toggle</label>
-					<label class="btn btn-default" id="refresh" data-ng-click="initialize();">Refresh</label> <!-- Currently doesn't work because content is constant -->
-					<label class="btn btn-default" id="revert" data-ng-click="initialize()">Revert</label>
+					<label class="btn btn-lg btn-default" data-ng-click="showTweets = !showTweets"
+							tooltip-placement="bottom" tooltip="Toggle display of matching tweets.">
+						<img src="glyphicons/png/glyphicons_158_show_lines.png" />
+					</label>
+					<label class="btn btn-lg btn-default" data-ng-click="initialize();"
+							tooltip-placement="bottom" tooltip="Refresh content.">
+						<img src="glyphicons/png/glyphicons_081_refresh.png" />
+					</label> <!-- Currently doesn't work because content is constant -->
+					<label class="btn btn-lg btn-default" data-ng-click="initialize()"
+							tooltip-placement="bottom" tooltip="Revert content.">
+						<img src="glyphicons/png/glyphicons_435_undo.png" />
+					</label>
 				</div></a>
 			</li>
 		</ul>
