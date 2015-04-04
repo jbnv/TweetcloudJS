@@ -1,0 +1,58 @@
+<html>
+
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/3.17.2/build/yui/yui-min.js"></script>
+<script src="js/twitterLogin.js"></script>
+</head>
+
+<body>
+Get and display one tweet.
+
+<div id="twitterlogin">Login</div>
+<div style="clear:both;" id="userinfo"></div>
+
+<script>
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('post',"https://stream.twitter.com/1.1/statuses/filter.json");
+	xhr.setRequestHeader("Content-type","application/json");
+	 
+	// Track the state changes of the request.
+	xhr.onreadystatechange = function(){
+		// Ready state 4 means the request is done.
+		console.log('readyState',xhr.readyState);
+		if(xhr.readyState === 4){
+			if(xhr.status === 202){
+				console.log('SUCCESS',xhr.responseText);
+			}else{
+				console.log('FAILURE',xhr);
+			}
+		}
+	}
+
+
+					//BEGIN MY STUFF
+					console.log('BEGIN MY STUFF');
+								
+					mySubmission = {
+						track: "barack obama"
+					};
+					console.log('send()');
+					xhr.send(JSON.stringify(mySubmission));
+					
+					//END MY STUFF
+					
+				//You have access to user id, name, screenname, description, etc.
+				//For more info visit https://dev.twitter.com/docs/api/1.1/get/account/verify_credentials 
+			   });
+			});
+		}
+	
+	}); // yui.use();	
+
+</script>
+
+</body>
+</html>
